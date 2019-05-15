@@ -7,7 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="346,223,0,0" VerticalAlignment="Top" x:Name="A"/>
+        <ListView HorizontalAlignment="Left" Height="421" VerticalAlignment="Top" Width="208" Margin="0,0,0,-0.333" x:Name="PlayerListView" SelectionChanged="PlayerListView_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel>
+                        <Label Content="{Binding name_display_last_first}"></Label>
+                        <Label Content="{Binding position}"></Label>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="261,44,0,0" VerticalAlignment="Top" x:Name="A"/>
+        <DataGrid DataContext="{Binding Source=PlayerFromAPI.sport_career_pitching.queryResults.row}"  HorizontalAlignment="Left" Height="100" Margin="261,268,0,0" VerticalAlignment="Top" Width="500" x:Name="StatGrid">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding era}" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding so}" MinWidth="50" />
+                <DataGridTextColumn Binding="{Binding ip}" MinWidth="50" />
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </Window>

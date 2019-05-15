@@ -32,17 +32,43 @@ namespace MLBApp
         {
             HttpClient client = new HttpClient();
 
-            var response = await client.GetAsync("http://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code='mlb'&active_sw='Y'&name_part='cole%25'");
+            var response = await client.GetAsync("http://lookup-service-prod.mlb.com/json/named.search_player_all.bam?sport_code='mlb'&active_sw='Y'&name_part='Cole%25'");
 
             string json = await response.Content.ReadAsStringAsync();
 
-            dynamic jokeFromAPI = JsonConvert.DeserializeObject<OmegaLUL>(json);
+            dynamic PlayerFromAPI = JsonConvert.DeserializeObject<OmegaLUL>(json);
 
-
-
-
-            A.Content = jokeFromAPI.name_display_first_last;
+            PlayerListView.ItemsSource = PlayerFromAPI.search_player_all.queryResults.row;
 
         }
+
+        private async void PlayerListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            HttpClient client = new HttpClient();
+
+            Player player = ((sender as ListView).SelectedItem as Player);
+            if (player.position != "P")
+            {
+                var response = await client.GetAsync("http://lookup-service-prod.mlb.com/json/named.sport_hitting_tm.bam?league_list_id='mlb'&game_type='R'&active_sw=Y&player_id=" + player.player_id);
+
+                string json = await response.Content.ReadAsStringAsync();
+
+                dynamic PlayerFromAPI = JsonConvert.DeserializeObject<Batter>(json);
+
+                A.Content = PlayerFromAPI.sport_hitting_tm.queryResults.row.avg;
+            }
+            else
+            {
+                var response = await client.GetAsync("http://lookup-service-prod.mlb.com/json/named.sport_career_pitching.bam?league_list_id='mlb'&game_type='R'&player_id=" + player.player_id);
+
+                string json = await response.Content.ReadAsStringAsync();
+
+                dynamic PlayerFromAPI = JsonConvert.DeserializeObject<Pitcher>(json);
+                
+            }
+            A.Content = player.name_display_last_first;
+
+        }
+
     }
 }

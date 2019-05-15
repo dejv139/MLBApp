@@ -63,4 +63,15 @@ namespace MLBApp
     {
         public SearchPlayerAll search_player_all { get; set; }
     }
+
+    public class OmegaLUL2
+    {
+        public SearchPlayerAll2 search_player_all { get; set; }
+    }
+
+    public class SearchPlayerAll2
+    {
+        public string copyRight { get; set; }
+        public QueryResult queryResults { get; set; }
+    }
 }

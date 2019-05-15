@@ -72,7 +72,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PitcherStats.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerStats.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
